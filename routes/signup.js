@@ -15,7 +15,7 @@ Router.post("/", function (req,res) {
             return res.redirect("signup");
         }
         passport.authenticate("local")(req,res,function () {
-            req.flash("success", "Welcome to YelpCamp");
+            req.flash("success", "Welcome to AGU Couse Review");
             res.redirect("/courses");
         });
     });

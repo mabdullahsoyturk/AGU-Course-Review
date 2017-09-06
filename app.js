@@ -14,7 +14,8 @@ var express = require('express'),
     comments = require('./routes/comments');
 
 app.set('port', process.env.PORT || 3000);
-mongoose.connect("mongodb://localhost/yelpcamp2");
+//mongoose.connect("mongodb://localhost/yelpcamp2");
+mongoose.connect("mongodb://muhammet:deneme@ds127854.mlab.com:27854/agu_course_review");
 app.use(bodyParser.urlencoded({extended:true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
