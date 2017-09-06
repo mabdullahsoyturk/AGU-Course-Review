@@ -57,4 +57,4 @@ app.use("/login", login);
 
 app.use("/logout", logout);
 
-app.listen(process.env.PORT, process.env.IP);
+app.listen(3000);
