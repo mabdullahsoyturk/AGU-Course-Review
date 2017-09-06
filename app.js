@@ -13,7 +13,7 @@ var express = require('express'),
     courses = require('./routes/courses'),
     comments = require('./routes/comments');
 
-app.set('port', process.env.PORT || 3000);
+const PORT = process.env.PORT || 3000;
 //mongoose.connect("mongodb://localhost/yelpcamp2");
 mongoose.connect("mongodb://muhammet:deneme@ds127854.mlab.com:27854/agu_course_review");
 app.use(bodyParser.urlencoded({extended:true}));
@@ -58,4 +58,4 @@ app.use("/login", login);
 
 app.use("/logout", logout);
 
-app.listen(3000);
+app.listen(PORT);
