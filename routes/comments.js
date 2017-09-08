@@ -12,7 +12,11 @@ Router.post("/", Middleware.isLoggedIn, function (req,res) {
             console.log(err);
             res.redirect("/courses");
         }else{
-            Comment.create(req.body.comment, function (err,comment) {
+
+            var text = req.body.text;
+            var newComment = {text:text};
+
+            Comment.create(newComment, function (err,comment) {
                 if(err){
                     console.log(err);
                 }else{
@@ -54,7 +58,8 @@ Router.get("/:comment_id/edit", Middleware.checkCommentOwnership, function (req,
 //////////////////////////////UPDATE////////////////////////////////////////////////////////////////////////////////////
 
 Router.put("/:comment_id", Middleware.checkCommentOwnership, function (req,res) {
-   Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function (err, updatedComment) {
+    var editedComment = {text:req.body.text};
+   Comment.findByIdAndUpdate(req.params.comment_id, editedComment, function (err, updatedComment) {
        if(err){
            res.redirect("back");
        }else{

@@ -4,7 +4,7 @@
         <h1 style="text-align:center">Create a new course</h1>
 
         <div style="width:30%; margin: 25px auto;">
-            <form action="/courses" method="POST">
+            <form action="/courses" method="POST" id="courseform">
                 <div class="form-group">
                     <input class="form-control" type="text" name="name" placeholder="name" required>
                 </div>
@@ -15,14 +15,13 @@
                     <input class="form-control" type="text" name="image" placeholder="image url" required>
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="description" placeholder="description" required>
+                    <textarea id="courseform" cols="47" rows ="10" name="description" placeholder="(Optional)"></textarea>
                 </div>
                 <div class="form-group">
                     <button class="btn btn-lg btn-default btn-block">Submit</button>
                 </div>
             </form>
-        </div>
-
+        </div
         <a href="/courses">Go back</a>
     </div>
 </div>
