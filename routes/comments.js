@@ -4,12 +4,9 @@ var Middleware = require('../middlewares/auth');
 var Course = require('../models/course');
 var Comment = require('../models/comment');
 
-///////////////////////////////////////CREATE///////////////////////////////////////////////////////////////////////////
-
 Router.post("/", Middleware.isLoggedIn, function (req,res) {
     Course.findById(req.params.id, function (err, course) {
         if(err){
-            console.log(err);
             res.redirect("/courses");
         }else{
 
@@ -33,12 +30,10 @@ Router.post("/", Middleware.isLoggedIn, function (req,res) {
     });
 });
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 Router.get("/new", Middleware.isLoggedIn, function (req,res) {
     Course.findById(req.params.id, function (err, course) {
         if(err){
-            console.log(err);
+            res.send("Error in backend");
         }else{
             res.render("comments/new", {course:course});
         }
@@ -55,8 +50,6 @@ Router.get("/:comment_id/edit", Middleware.checkCommentOwnership, function (req,
     });
 });
 
-//////////////////////////////UPDATE////////////////////////////////////////////////////////////////////////////////////
-
 Router.put("/:comment_id", Middleware.checkCommentOwnership, function (req,res) {
     var editedComment = {text:req.body.text};
    Comment.findByIdAndUpdate(req.params.comment_id, editedComment, function (err, updatedComment) {
@@ -68,10 +61,6 @@ Router.put("/:comment_id", Middleware.checkCommentOwnership, function (req,res) 
    });
 });
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-///////////////////////////////DELETE///////////////////////////////////////////////////////////////////////////////////
-
 Router.delete("/:comment_id", Middleware.checkCommentOwnership, function (req,res) {
     Comment.findByIdAndRemove(req.params.comment_id, function (err) {
         if(err){
@@ -82,7 +71,5 @@ Router.delete("/:comment_id", Middleware.checkCommentOwnership, function (req,re
         }
     })
 });
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 module.exports = Router;

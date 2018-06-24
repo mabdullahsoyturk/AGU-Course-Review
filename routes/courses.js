@@ -6,14 +6,12 @@ var Middleware = require('../middlewares/auth');
 Router.get("/", function (req,res) {
     Course.find({}, function (err, allCourses) {
         if(err){
-            console.log(err);
+            res.send("Error in backend");
         }else{
             res.render("courses/index", {courses:allCourses, currentUser:req.user});
         }
     });
 });
-
-///////////////////////////////////////CREATE///////////////////////////////////////////////////////////////////////////
 
 Router.post("/", Middleware.isLoggedIn, function (req,res) {
     var name = req.body.name;
@@ -28,40 +26,32 @@ Router.post("/", Middleware.isLoggedIn, function (req,res) {
 
     Course.create(newCourse, function (err, newlyCreated) {
         if(err){
-            console.log(err);
+            res.send("Error in backend");
         }else{
             res.redirect("/courses");
         }
     });
 });
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 Router.get("/new", Middleware.isLoggedIn, function (req,res) {
     res.render("courses/new");
 });
 
-//////////////////////////////////////////////READ//////////////////////////////////////////////////////////////////////
-
 Router.get("/:id", function (req,res) {
     Course.findById(req.params.id).populate("comments").exec(function (err,foundCourse) {
         if(err){
-            console.log(err);
+            res.send("Error in backend");
         }else{
             res.render("courses/show", {course:foundCourse});
         }
     });
 });
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 Router.get("/:id/edit", Middleware.checkCourseOwnership, function (req,res) {
     Course.findById(req.params.id, function (err, foundCourse) {
         res.render("courses/edit", {course: foundCourse});
     });
 });
-
-//////////////////////////////UPDATE////////////////////////////////////////////////////////////////////////////////////
 
 Router.put("/:id", Middleware.checkCourseOwnership, function (req,res) {
     var data = {name: req.body.name, image:req.body.image, description:req.body.description};
@@ -75,10 +65,6 @@ Router.put("/:id", Middleware.checkCourseOwnership, function (req,res) {
     });
 });
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-///////////////////////////////DELETE///////////////////////////////////////////////////////////////////////////////////
-
 Router.delete("/:id", Middleware.checkCourseOwnership,  function (req,res) {
     Course.findByIdAndRemove(req.params.id, function (err) {
         if(err){
@@ -89,7 +75,5 @@ Router.delete("/:id", Middleware.checkCourseOwnership,  function (req,res) {
         }
     })
 });
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 module.exports = Router;

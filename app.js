@@ -14,8 +14,7 @@ var express = require('express'),
     comments = require('./routes/comments');
 
 const PORT = process.env.PORT || 3000;
-//mongoose.connect("mongodb://localhost/yelpcamp2");
-mongoose.connect("mongodb://muhammet:deneme@ds127854.mlab.com:27854/agu_course_review");
+mongoose.connect("mongodb://localhost/dbname");
 app.use(bodyParser.urlencoded({extended:true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
@@ -30,13 +29,11 @@ app.use(require("express-session")({
 
 app.use(flash());
 
-///////////////////////////////////////PASSPORT CONFIG//////////////////////////////////////////////////////////////////
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.use(function (req,res,next) {
     res.locals.currentUser = req.user;
